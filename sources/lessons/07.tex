@@ -1,0 +1,235 @@
+% Источники: raw/IMG_7629.jpeg -- raw/IMG_7635.jpeg.
+% Компиляция: tectonic 07.tex
+\input{lesson-preamble.tex}
+\begin{document}
+\lessontitle{Семинар №\,7}{Комбинаторика. Сложение и умножение вероятностей}{17.10.26}
+
+\sourcepage{IMG_7629.jpeg}
+\section*{Полиномиальный коэффициент}
+\[
+ C(m_1,m_2,\ldots,m_k)=\frac{n!}{m_1!m_2!\cdots m_k!}.
+\]
+Здесь $n$ --- число элементов, $k$ --- число классов (групп),
+$m_i$ --- число элементов в $i$-й группе; $m_1+\cdots+m_k=n$.
+Порядок групп важен, порядок элементов внутри группы не важен.
+Биномиальный коэффициент --- обычный коэффициент сочетаний.
+
+\textbf{Пример.} Десять студентов распределяются по трём помеченным группам:
+в первую --- $5$, во вторую --- $3$, в третью --- $2$:
+\[
+ C(5,3,2)=\frac{10!}{5!3!2!}=2520.
+\]
+Внизу страницы дополнительно записано:
+\[
+ P_3=3!=6,\qquad \frac{C(5,3,2)}{6}=420.
+\]
+\editorial{Условие, к которому относится деление на $6$, не приведено.
+При помеченных группах ответом остаётся $2520$; деление на $6$ здесь не обосновывается.}
+
+\sourcepage{IMG_7630.jpeg}
+\section*{Телефонные каналы}
+На узел связи поступили шесть телефонных вызовов; они распределяются
+по четырём каналам независимо друг от друга. Рассматривается распределение:
+на первый канал --- $3$ вызова, на второй --- $2$, на третий --- $1$,
+на четвёртый --- $0$.
+
+Исход $(x_1,\ldots,x_6)$, где $x_i\in\{1,2,3,4\}$ --- номер канала
+$i$-го вызова. Это размещения с повторениями:
+\[
+ \Omega=\{(x_1,\ldots,x_6):x_i\in\{1,2,3,4\}\},\qquad
+ N=\widetilde A_4^6=4^6.
+\]
+Событие $A$ задаётся условиями
+\[
+ |\{i:x_i=1\}|=3,\quad |\{i:x_i=2\}|=2,\quad
+ |\{i:x_i=3\}|=1,\quad |\{i:x_i=4\}|=0.
+\]
+\[
+ N_A=C(3,2,1,0)=\frac{6!}{3!2!1!0!},\qquad P(A)=\frac{N_A}{N}.
+\]
+\editorial{В исходнике итоговая дробь не вычислена.
+Равновозможность каналов используется в записанном подсчёте $N=4^6$.}
+
+\parttitle{Домашнее задание}
+Номер 2.28. Краткие записи событий:
+$A$ --- разные вагоны; $B$ --- один вагон пуст;
+$C$ --- в I вагоне $5$, во II --- $2$, в III --- $1$, в IV --- $1$,
+остальные пусты.
+\editorial{Полное условие домашней задачи на странице не приведено.}
+
+\sourcepage{IMG_7631.jpeg}
+\section*{Сложение и умножение вероятностей}
+\begin{enumerate}
+ \item $0\le P(A)\le1$.
+ \item $P(\overline A)=1-P(A)$.
+ \item Если $A$ и $B$ несовместны, то
+ \[
+ P(A\cup B)=P(A)+P(B).
+ \]
+ Несовместные события не могут произойти одновременно:
+ $A\cap B=\varnothing$. Для произвольных событий
+ \[
+ P(A\cup B)=P(A)+P(B)-P(A\cap B).
+ \]
+ \item Если $A$ и $B$ независимы, то
+ \[
+ P(A\cap B)=P(A)P(B).
+ \]
+ Независимость означает, что наступление одного события не меняет
+ вероятность другого. В общем случае при $P(A)>0$
+ \[
+ P(A\cap B)=P(A)P(B\mid A).
+ \]
+\end{enumerate}
+В исходнике используются обозначения $A+B=A\cup B$ и $AB=A\cap B$.
+\begin{center}
+\begin{tikzpicture}[scale=.75]
+ \fill[gray!20] (0,0) circle (1);\fill[gray!20] (1.3,0) circle (1);
+ \draw (0,0) circle (1) (1.3,0) circle (1);
+ \node at (-.45,0){$A$};\node at (1.75,0){$B$};\node at (.65,-1.35){$A\cup B$};
+ \begin{scope}[xshift=5.5cm]
+ \begin{scope}\clip (0,0) circle (1);\fill[gray!40] (1.3,0) circle (1);\end{scope}
+ \draw (0,0) circle (1) (1.3,0) circle (1);
+ \node at (-.45,0){$A$};\node at (1.75,0){$B$};\node at (.65,-1.35){$A\cap B$};
+ \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\sourcepage{IMG_7632.jpeg}
+\section*{Обнаружение воздушной цели}
+Две станции независимо обнаруживают цель. Вероятности обнаружения:
+$0{,}7$ для первой и $0{,}8$ для второй. Найти вероятность обнаружения
+ровно одной станцией; затем --- хотя бы одной.
+
+$A$ --- цель обнаружена первой станцией, $B$ --- второй:
+\[
+ P(A)=0{,}7,\quad P(\overline A)=0{,}3,\quad
+ P(B)=0{,}8,\quad P(\overline B)=0{,}2.
+\]
+\parttitle{1. Ровно одна станция}
+\[
+ C=(A\cap\overline B)\cup(\overline A\cap B).
+\]
+Слагаемые события несовместны. Используя независимость, получаем
+\[
+ P(C)=P(A)P(\overline B)+P(\overline A)P(B).
+\]
+\parttitle{2. Хотя бы одна станция}
+В исходнике записаны три способа описать событие $D$:
+\[
+ D=(A\cap\overline B)\cup(\overline A\cap B)\cup(A\cap B),
+\]
+\[
+ P(D)=P(A\cup B)=P(A)+P(B)-P(A)P(B),
+\]
+\[
+ \overline D=\overline A\cap\overline B,\qquad
+ P(\overline D)=0{,}06,\qquad P(D)=1-0{,}06=0{,}94.
+\]
+
+\sourcepage{IMG_7633.jpeg}
+\section*{Задачи с цепями}
+Рассматриваются последовательное и параллельное соединения.
+$A$ --- система работает; $\overline A$ --- отказ системы;
+$A_i$ --- работает $i$-й элемент, $\overline A_i$ --- его отказ.
+Требуется описать $A$, $\overline A$ и найти $P(A)$.
+
+\parttitle{Последовательное соединение}
+\begin{center}
+\begin{tikzpicture}
+ \draw (0,0)--(5,0);
+ \node[element] at (1,0){1};\node[element] at (2.5,0){2};\node[element] at (4,0){3};
+ \fill (0,0) circle (1.3pt);\fill (5,0) circle (1.3pt);
+\end{tikzpicture}
+\end{center}
+Система работает, если работают все элементы:
+\[
+ A=A_1\cap A_2\cap A_3,\qquad
+ \overline A=\overline A_1\cup\overline A_2\cup\overline A_3.
+\]
+При независимых отказах
+\[
+ P(A)=P(A_1)P(A_2)P(A_3),\qquad
+ P(\overline A)=1-P(A_1)P(A_2)P(A_3).
+\]
+\parttitle{Параллельное соединение}
+\begin{center}
+\begin{tikzpicture}
+ \draw (0,0)--(1,0) (1,-.8)--(1,.8) (3,-.8)--(3,.8) (3,0)--(4,0);
+ \foreach \y/\n in {.8/1,0/2,-.8/3}{\draw (1,\y)--(3,\y);\node[element] at (2,\y){\n};}
+ \fill (0,0) circle (1.3pt);\fill (4,0) circle (1.3pt);
+\end{tikzpicture}
+\end{center}
+\[
+ A=A_1\cup A_2\cup A_3,\qquad
+ \overline A=\overline A_1\cap\overline A_2\cap\overline A_3.
+\]
+\[
+ P(A)=1-P(\overline A)=1-P(\overline A_1)P(\overline A_2)P(\overline A_3).
+\]
+
+\sourcepage{IMG_7634.jpeg}
+\section*{Система из четырёх элементов}
+Элементы выходят из строя независимо. Даны вероятности работы:
+\[
+ p_1=0{,}6,\quad p_2=0{,}8,\quad p_3=0{,}9,\quad p_4=0{,}7.
+\]
+Вероятности отказа: $q_1=0{,}4$, $q_2=0{,}2$, $q_3=0{,}1$, $q_4=0{,}3$.
+На схеме верхняя ветвь содержит последовательно элементы 1 и 2;
+ещё две параллельные ветви содержат элементы 3 и 4.
+\begin{center}
+\begin{tikzpicture}
+ \draw (0,0)--(1,0) (1,-.9)--(1,.9) (4,-.9)--(4,.9) (4,0)--(5,0);
+ \foreach \y in {-.9,0,.9}{\draw (1,\y)--(4,\y);}
+ \node[element] at (2,.9){1};\node[element] at (3,.9){2};
+ \node[element] at (2.5,0){3};\node[element] at (2.5,-.9){4};
+\end{tikzpicture}
+\end{center}
+\[
+ A=(A_1\cap A_2)\cup(A_3\cup A_4),
+ \qquad \overline A=(\overline A_1\cup\overline A_2)
+ \cap\overline A_3\cap\overline A_4.
+\]
+\[
+ P(\overline A)=(1-p_1p_2)q_3q_4=0{,}0156,
+ \qquad P(A)=1-P(\overline A)=0{,}9844.
+\]
+
+\sourcepage{IMG_7635.jpeg}
+\section*{Дополнительные схемы}
+\parttitle{Три параллельных элемента и один последовательный}
+\begin{center}
+\begin{tikzpicture}
+ \draw (0,0)--(1,0) (1,-.8)--(1,.8) (3,-.8)--(3,.8) (3,0)--(5,0);
+ \foreach \y/\n in {.8/1,0/2,-.8/3}{\draw (1,\y)--(3,\y);\node[element] at (2,\y){\n};}
+ \node[element] at (4,0){4};
+\end{tikzpicture}
+\end{center}
+\[
+ A=(A_1\cup A_2\cup A_3)\cap A_4,\qquad
+ \overline A=(\overline A_1\cap\overline A_2\cap\overline A_3)\cup\overline A_4,
+\]
+\[
+ P(A)=(1-q_1q_2q_3)p_4.
+\]
+\parttitle{Параллельные 1 и 2 последовательно с 3; нижняя ветвь --- 4}
+\begin{center}
+\begin{tikzpicture}
+ \draw (0,0)--(1,0) (1,-.8)--(1,1.2) (3,.4)--(3,1.2)
+ (1,1.2)--(3,1.2) (1,.4)--(3,.4) (3,.8)--(4,.8)
+ (4,.8)--(4,-.8) (1,-.8)--(4,-.8) (4,0)--(5,0);
+ \node[element] at (2,1.2){1};\node[element] at (2,.4){2};
+ \node[element] at (3.5,.8){3};\node[element] at (2.5,-.8){4};
+\end{tikzpicture}
+\end{center}
+\[
+ A=((A_1\cup A_2)\cap A_3)\cup A_4,
+ \qquad\overline A=((\overline A_1\cap\overline A_2)\cup\overline A_3)\cap\overline A_4,
+\]
+\[
+ P(\overline A)=\bigl(1-(1-q_1q_2)p_3\bigr)q_4.
+\]
+\editorial{В последней формуле рукописи у вероятности отказа четвёртого элемента
+пропущено дополнение; здесь использовано $q_4=P(\overline A_4)$.}
+Последняя схема помечена как домашнее задание.
+\end{document}
